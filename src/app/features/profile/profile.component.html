@@ -41,7 +41,7 @@
               <p class="profile-email">{{ currentUser()!.email }}</p>
               <div class="profile-badges">
                 <span class="role-badge">{{ currentUser()!.roleName }}</span>
-                <span class="status-badge" [class]="'status-' + currentUser()!.status?.toLowerCase()">
+                <span class="status-badge" [class]="'status-' + currentUser()!.status.toLowerCase()">
                   <span class="status-dot"></span>{{ currentUser()!.status }}
                 </span>
                 @if (!editingProfile()) {
