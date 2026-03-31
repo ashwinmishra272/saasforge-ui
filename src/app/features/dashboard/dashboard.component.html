@@ -1,0 +1,109 @@
+<div class="dashboard-page">
+  <div class="page-header">
+    <div class="welcome-section">
+      <h1 class="page-title">
+        Welcome back, <span class="highlight">{{ userName() }}</span> 👋
+      </h1>
+      <p class="page-subtitle">
+        Here's what's happening in your workspace
+        @if (tenantName()) {
+          at <strong>{{ tenantName() }}</strong>
+        }
+      </p>
+    </div>
+    <div class="header-actions">
+      @if (authService.isAdmin()) {
+        <button mat-raised-button color="primary" routerLink="/invite">
+          <mat-icon>person_add</mat-icon>
+          Invite User
+        </button>
+      }
+      <button mat-stroked-button routerLink="/users">
+        <mat-icon>people</mat-icon>
+        Manage Users
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="48"></mat-spinner>
+      <p>Loading dashboard...</p>
+    </div>
+  } @else {
+    <div class="stats-grid">
+      @for (stat of stats(); track stat.label) {
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-content">
+              <div class="stat-info">
+                <p class="stat-label">{{ stat.label }}</p>
+                <h2 class="stat-value">{{ stat.value }}</h2>
+              </div>
+              <div class="stat-icon" [style.background]="stat.bg">
+                <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <div class="quick-actions-section">
+      <h2 class="section-title">Quick Actions</h2>
+      <div class="actions-grid">
+        <mat-card class="action-card" routerLink="/users">
+          <mat-card-content>
+            <div class="action-icon" style="background: #ede7f6">
+              <mat-icon style="color: #5c6bc0">manage_accounts</mat-icon>
+            </div>
+            <h3>Manage Users</h3>
+            <p>View and manage team members</p>
+          </mat-card-content>
+        </mat-card>
+
+        @if (authService.isAdmin()) {
+          <mat-card class="action-card" routerLink="/roles">
+            <mat-card-content>
+              <div class="action-icon" style="background: #e0f2f1">
+                <mat-icon style="color: #00897b">admin_panel_settings</mat-icon>
+              </div>
+              <h3>Manage Roles</h3>
+              <p>Configure access and permissions</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="action-card" routerLink="/invite">
+            <mat-card-content>
+              <div class="action-icon" style="background: #fff3e0">
+                <mat-icon style="color: #f57c00">person_add</mat-icon>
+              </div>
+              <h3>Invite Team Members</h3>
+              <p>Send invitations to new users</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="action-card" routerLink="/tenants">
+            <mat-card-content>
+              <div class="action-icon" style="background: #e3f2fd">
+                <mat-icon style="color: #1565c0">domain</mat-icon>
+              </div>
+              <h3>Manage Tenants</h3>
+              <p>View and manage all tenants</p>
+            </mat-card-content>
+          </mat-card>
+        }
+
+        <mat-card class="action-card" routerLink="/profile">
+          <mat-card-content>
+            <div class="action-icon" style="background: #fce4ec">
+              <mat-icon style="color: #c2185b">account_circle</mat-icon>
+            </div>
+            <h3>Profile Settings</h3>
+            <p>Update your account information</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  }
+</div>

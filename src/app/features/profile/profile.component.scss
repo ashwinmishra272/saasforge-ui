@@ -1,0 +1,62 @@
+.profile-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.profile-card, .password-card {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06) !important;
+  mat-card-content { padding: 32px !important; }
+}
+
+.profile-hero {
+  display: flex; gap: 20px; align-items: center; margin-bottom: 24px;
+}
+
+.profile-avatar {
+  width: 80px; height: 80px; border-radius: 24px; flex-shrink: 0;
+  background: linear-gradient(135deg, #6200ea, #1565c0);
+  color: #fff; font-size: 28px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.profile-name  { font-size: 22px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+.profile-email { font-size: 14px; color: #6b7280; margin-bottom: 12px; }
+.profile-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.divider { margin: 0 0 24px !important; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.info-item { display: flex; flex-direction: column; gap: 6px; }
+.info-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: .5px;
+  mat-icon { font-size: 14px; width: 14px; height: 14px; }
+}
+.info-value { font-size: 15px; font-weight: 600; color: #1a1a2e; }
+.mono { font-family: monospace; font-size: 13px !important; }
+
+/* password card */
+.card-header {
+  display: flex; gap: 16px; align-items: flex-start; margin-bottom: 28px;
+}
+.card-icon-wrap {
+  width: 48px; height: 48px; border-radius: 14px; flex-shrink: 0;
+  background: linear-gradient(135deg, #6200ea22, #1565c022);
+  display: flex; align-items: center; justify-content: center;
+  mat-icon { color: #6200ea; font-size: 24px; }
+}
+.card-title   { font-size: 18px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+.card-subtitle { font-size: 13px; color: #6b7280; }
+
+.password-form { display: flex; flex-direction: column; gap: 16px; }
+
+.change-btn {
+  height: 48px; font-size: 15px; font-weight: 600; border-radius: 10px !important;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  mat-spinner { --mdc-circular-progress-active-indicator-color: #fff; }
+}

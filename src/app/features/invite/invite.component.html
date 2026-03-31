@@ -1,0 +1,146 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Invite Team Member</h1>
+      <p class="page-subtitle">Send an invitation link to add someone to your workspace</p>
+    </div>
+  </div>
+
+  <div class="invite-layout">
+    <mat-card class="invite-card">
+      <mat-card-content>
+
+        @if (!inviteToken()) {
+          <div class="invite-icon-wrap">
+            <div class="invite-icon-bg">
+              <mat-icon>person_add</mat-icon>
+            </div>
+          </div>
+          <h2 class="invite-heading">Invite a new member</h2>
+          <p class="invite-desc">Enter their email and choose a role. They'll receive a token to join your workspace.</p>
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="invite-form">
+            <mat-form-field appearance="outline">
+              <mat-label>Email Address</mat-label>
+              <input matInput type="email" formControlName="email" placeholder="colleague@company.com">
+              <mat-icon matPrefix>email</mat-icon>
+              @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+                <mat-error>Email is required</mat-error>
+              }
+              @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+                <mat-error>Enter a valid email address</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Assign Role</mat-label>
+              <mat-select formControlName="roleId">
+                @if (rolesLoading()) {
+                  <mat-option disabled>Loading roles...</mat-option>
+                }
+                @for (role of roles(); track role.id) {
+                  <mat-option [value]="role.id">{{ role.name }} ({{ role.roleKey }})</mat-option>
+                }
+              </mat-select>
+              <mat-icon matPrefix>admin_panel_settings</mat-icon>
+              @if (form.get('roleId')?.hasError('required') && form.get('roleId')?.touched) {
+                <mat-error>Please select a role</mat-error>
+              }
+            </mat-form-field>
+
+            <button
+              mat-raised-button color="primary" type="submit"
+              class="submit-btn"
+              [disabled]="form.invalid || loading()">
+              @if (loading()) {
+                <mat-spinner diameter="20"></mat-spinner>
+                Sending...
+              } @else {
+                <mat-icon>send</mat-icon>
+                Send Invitation
+              }
+            </button>
+          </form>
+
+        } @else {
+          <div class="success-result">
+            <div class="success-icon-wrap">
+              <mat-icon class="success-icon">check_circle</mat-icon>
+            </div>
+            <h2 class="invite-heading">Invitation Created!</h2>
+            <p class="invite-desc">Share the token or the accept link with <strong>{{ inviteEmail() }}</strong></p>
+
+            <div class="token-section">
+              <div class="token-label">Invitation Token</div>
+              <div class="token-display">
+                <code class="token-code">{{ inviteToken() }}</code>
+                <button mat-icon-button (click)="copyToken()" matTooltip="Copy token">
+                  <mat-icon>content_copy</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <mat-divider class="divider"></mat-divider>
+
+            <div class="token-section">
+              <div class="token-label">Accept URL (share this link)</div>
+              <div class="token-display url-display">
+                <code class="token-code url-code">{{ '/accept-invitation?token=' + inviteToken() }}</code>
+                <button mat-icon-button (click)="copyAcceptUrl()" matTooltip="Copy accept URL">
+                  <mat-icon>link</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <p class="token-note">
+              <mat-icon>info</mat-icon>
+              This token expires in 7 days. The user will be asked to set their name and password.
+            </p>
+
+            <button mat-stroked-button color="primary" (click)="sendAnother()" class="another-btn">
+              <mat-icon>add</mat-icon>
+              Invite Another Person
+            </button>
+          </div>
+        }
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="info-card">
+      <mat-card-content>
+        <h3 class="info-title">How Invitations Work</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <strong>Send invitation</strong>
+              <p>Enter the email and role. A unique token is generated.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <strong>Share the token</strong>
+              <p>Copy the accept URL and send it to your colleague.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <strong>They accept</strong>
+              <p>They open the link, set a password, and join your workspace.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <strong>They log in</strong>
+              <p>Once accepted, they can log in with their email and password.</p>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

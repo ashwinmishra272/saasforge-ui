@@ -1,0 +1,53 @@
+<mat-toolbar class="app-header">
+  <div class="header-left">
+    <button mat-icon-button (click)="toggleSidebar.emit()" class="menu-toggle">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    @if (tenantName()) {
+      <div class="tenant-badge">
+        <mat-icon>domain</mat-icon>
+        <span>{{ tenantName() }}</span>
+      </div>
+    }
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="header-right">
+    <div class="user-menu" [matMenuTriggerFor]="userMenu">
+      <div class="avatar">{{ userInitials() }}</div>
+      <div class="user-info">
+        <span class="user-name">{{ userName() }}</span>
+        <span class="user-role">{{ authService.userRole() }}</span>
+      </div>
+      <mat-icon class="chevron">expand_more</mat-icon>
+    </div>
+  </div>
+</mat-toolbar>
+
+<mat-menu #userMenu="matMenu" class="user-dropdown">
+  <div class="menu-header">
+    <div class="menu-avatar">{{ userInitials() }}</div>
+    <div>
+      <div class="menu-name">{{ userName() }}</div>
+      <div class="menu-role">{{ authService.userRole() }}</div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <button mat-menu-item routerLink="/profile">
+    <mat-icon>account_circle</mat-icon>
+    <span>Profile Settings</span>
+  </button>
+  @if (authService.isAdmin()) {
+    <button mat-menu-item routerLink="/tenants">
+      <mat-icon>domain</mat-icon>
+      <span>Manage Tenants</span>
+    </button>
+  }
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="onLogout()" class="logout-item">
+    <mat-icon>logout</mat-icon>
+    <span>Sign Out</span>
+  </button>
+</mat-menu>

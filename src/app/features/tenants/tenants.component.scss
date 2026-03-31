@@ -1,0 +1,19 @@
+.tenant-cell {
+  display: flex; align-items: center; gap: 12px;
+  .tenant-icon {
+    width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: #fff; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tenant-name { font-weight: 600; color: #1a1a2e; font-size: 14px; }
+  .tenant-id   { font-size: 11px; color: #9ca3af; }
+}
+
+.key-badge {
+  font-family: monospace; font-size: 12px;
+  background: #f3f4f6; color: #374151;
+  padding: 3px 8px; border-radius: 6px;
+}
+
+.date-text { font-size: 13px; color: #6b7280; }
